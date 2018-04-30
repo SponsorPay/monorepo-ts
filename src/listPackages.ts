@@ -3,12 +3,15 @@ import {promisify} from "util"
 
 const lerna = require(process.env.PWD + "/lerna.json")
 
+export interface PackageJSON {
+  name: string;
+  dependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
+}
+
 export interface Package {
   path: string;
-  json: {
-    name: string;
-    dependencies: Record<string, string>;
-  };
+  json: PackageJSON;
 }
 
 export function getPackage(path: string): Package {

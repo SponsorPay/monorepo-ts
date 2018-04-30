@@ -8,6 +8,7 @@
   ],
   "bin": {
     "ts-project": "build/tsProject.js",
+    "link-bin": "build/linkBin.js",
     "print-packages": "build/printPackages.js"
   },
   "scripts": {

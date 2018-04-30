@@ -3,6 +3,7 @@
 import {compiler} from "./compiler"
 import {linkDeps} from "./linkDeps"
 import {listPackages, Package} from "./listPackages"
+import {topLevelDeps} from "./topLevelDeps"
 
 const log = console.log.bind(console);
 
@@ -16,6 +17,7 @@ const log = console.log.bind(console);
     })
   )
 
+  topLevelDeps(packages)
   linkDeps(packages)
   log("Watching for file changes.")
 })()
