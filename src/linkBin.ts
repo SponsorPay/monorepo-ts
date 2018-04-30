@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import * as fs from "fs"
 import {promisify} from "util"
 import {listPackages, Package} from "./listPackages"
