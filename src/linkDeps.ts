@@ -33,6 +33,7 @@ export function linkDeps(packages: Package[]) {
   }
 
   function scopePackage(p: Package) {
+    log(`${p.json.name}: start...`)
     const deps = getAllNestedDeps(p)
     log(`${p.json.name}: linking ${deps.size} dependencies...`)
     getAllNestedDeps(p).forEach(async (dep: string) => {
