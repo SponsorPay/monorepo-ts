@@ -87,7 +87,7 @@ export function compiler(p: Package) {
       });
     }
 
-    chokidar.watch(tsConfig.include, {
+    chokidar.watch(tsConfig.include[0], {
       cwd: p.path,
       usePolling: true
     })
