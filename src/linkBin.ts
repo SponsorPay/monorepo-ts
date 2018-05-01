@@ -21,7 +21,7 @@ export async function linkBin(packages: Package[]) {
       try {
         await prom.stat(`${packageBinDirPath}/${bin}`)
       } catch (e) {
-        console.log(`${packageBinDirPath}/${bin}`, "->", `${binDirPath}/${bin}`)
+        // console.log(`${packageBinDirPath}/${bin}`, "->", `${binDirPath}/${bin}`)
         prom.symlink(`${binDirPath}/${bin}`, `${packageBinDirPath}/${bin}`)
       }
     }
