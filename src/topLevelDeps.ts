@@ -18,6 +18,6 @@ export async function topLevelDeps(packages: Package[]) {
   devDeps = Object.keys(devDeps).sort().reduce((prev, next) => ({...prev, [next]: devDeps[next]}), {})
   const path = `${process.env.PWD}/package.json`
   const packageJson: PackageJSON = JSON.parse(await prom.readFile(path, {encoding: "utf8"}))
-  packageJson.devDependencies = devDeps
+  packageJson.dependencies = devDeps
   await prom.writeFile(path, JSON.stringify(packageJson, null, 2))
 }
