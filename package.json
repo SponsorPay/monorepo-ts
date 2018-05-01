@@ -7,9 +7,7 @@
     "build"
   ],
   "bin": {
-    "ts-project": "build/tsProject.js",
-    "link-bin": "build/linkBin.js",
-    "print-packages": "build/printPackages.js"
+    "mnrp": "build/tsProject.js"
   },
   "scripts": {
     "watch": "ts-node src/watch",
@@ -32,8 +30,10 @@
   "devDependencies": {
     "@types/chokidar": "^1.7.5",
     "@types/glob": "^5.0.35",
+    "@types/minimist": "^1.2.0",
     "@types/mkdirp": "^0.5.2",
     "@types/node": "^9.6.6",
-    "@types/rimraf": "^2.0.2"
+    "@types/rimraf": "^2.0.2",
+    "minimist": "^1.2.0"
   }
 }

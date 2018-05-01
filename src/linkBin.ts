@@ -1,5 +1,3 @@
-#! /usr/bin/env node
-
 import * as fs from "fs"
 import {promisify} from "util"
 import {listPackages, Package} from "./listPackages"
@@ -12,16 +10,14 @@ const prom = {
   mkdirp: promisify(mkdirp),
 }
 
-export async function linkBin() {
+export async function linkBin(packages: Package[]) {
   const binDirPath = `${process.env.PWD}/node_modules/.bin`
   const binaries = await prom.readdir(binDirPath)
 
-  const packages = await listPackages()
-
-  for(const p of packages) {
+  for (const p of packages) {
     const packageBinDirPath = `${p.path}/node_modules/.bin`
     await prom.mkdirp(packageBinDirPath)
-    for(const bin of binaries) {
+    for (const bin of binaries) {
       try {
         await prom.stat(`${packageBinDirPath}/${bin}`)
       } catch (e) {
@@ -31,5 +27,3 @@ export async function linkBin() {
     }
   }
 }
-
-linkBin()
