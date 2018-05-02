@@ -7,8 +7,8 @@ import * as fs from "fs"
 
 const log = console.log.bind(console);
 
-export function compiler(p: Package) {
-  const tsConfig = require(p.path + "/tsconfig.json")
+export function compiler(p: Package, tsconfig = "tsconfig.json") {
+  const tsConfig = require(p.path + "/" + tsconfig)
   const compilerOptions = ts.convertCompilerOptionsFromJson(tsConfig.compilerOptions, p.path)
 
   function compile(files: string[]) {

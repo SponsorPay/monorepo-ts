@@ -33,7 +33,7 @@ const log = console.log.bind(console);
     default:
       await Promise.all(
         packages.map(p => {
-          compiler(p).watch()
+          compiler(p, args.tsconfig).watch()
           // return compiler(p).once()
         })
       )
