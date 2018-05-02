@@ -10,13 +10,16 @@ export interface PackageJSON {
 }
 
 export interface Package {
+  relativePath: string;
   path: string;
   json: PackageJSON;
 }
 
-export function getPackage(path: string): Package {
+export function getPackage(relativePath: string): Package {
+  const path = `${process.env.PWD}/${relativePath}`
   const json = require(path + "/" + "package.json")
   return {
+    relativePath,
     path,
     json
   }
@@ -27,7 +30,7 @@ export async function listPackages(): Promise<Package[]> {
   const arrays = await Promise.all(
     lerna.packages.map(
       async (p: string) => {
-        const files = await promisify(glob)(p, {absolute: true})
+        const files = await promisify(glob)(p)
         return files.map(getPackage)
       }
     )

@@ -6,6 +6,7 @@ import {linkDeps} from "./linkDeps"
 import {listPackages, Package} from "./listPackages"
 import {topLevelDeps} from "./topLevelDeps"
 import * as minimist from "minimist"
+import {tsConfigPaths} from "./tsConfigPaths"
 
 const args = minimist(process.argv.slice(2))
 
@@ -15,6 +16,9 @@ const log = console.log.bind(console);
   const packages = await listPackages()
 
   switch (args._[0]) {
+    case "paths":
+      tsConfigPaths(packages)
+      break;
     case "print":
       console.log(
         JSON.stringify(
