@@ -4,6 +4,7 @@ import * as glob from "glob"
 import {promisify} from "util"
 import {Package} from "./listPackages"
 import * as fs from "fs"
+
 const log = console.log.bind(console);
 
 export function compiler(p: Package) {
@@ -32,7 +33,7 @@ export function compiler(p: Package) {
 
     // initialize the list of files
     rootFileNames.forEach(fileName => {
-      files[fileName] = { version: 0 };
+      files[fileName] = {version: 0}
     });
 
     const servicesHost: ts.LanguageServiceHost = {
@@ -66,7 +67,11 @@ export function compiler(p: Package) {
       }
 
       output.outputFiles.forEach(o => {
-        fs.writeFileSync(o.name, o.text, "utf8");
+        try {
+          fs.writeFileSync(o.name, o.text, "utf8");
+        } catch (e) {
+          console.error(`Unable to write file ${o.name}`)
+        }
       });
     }
 
@@ -78,7 +83,7 @@ export function compiler(p: Package) {
       allDiagnostics.forEach(diagnostic => {
         let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
         if (diagnostic.file) {
-          let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+          let {line, character} = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
           console.log(`  Error ${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
         }
         else {
@@ -93,8 +98,12 @@ export function compiler(p: Package) {
     })
       .on('change', path => {
         path = `${p.path}/${path}`
-        files[path].version++;
-        emitFile(path)
+        if (files[path] != null) {
+          files[path].version++
+          emitFile(path)
+        } else {
+          console.warn(`${path} is not recognized`)
+        }
       })
   }
 
