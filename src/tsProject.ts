@@ -16,6 +16,9 @@ const log = console.log.bind(console);
   const packages = await listPackages()
 
   switch (args._[0]) {
+    case "link-updated":
+      linkDeps(packages, true)
+      break;
     case "paths":
       tsConfigPaths(packages)
       break;
