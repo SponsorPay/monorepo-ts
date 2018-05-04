@@ -13,7 +13,8 @@
     "watch": "ts-node src/watch",
     "link-source": "ts-node src/link-source",
     "compile": "tsc",
-    "build": "rm -rf build && npm run compile"
+    "build": "rm -rf build && npm run compile",
+    "test": "mocha test/**/*.ts* --require=ts-node/register --require mocha-clean"
   },
   "author": "",
   "license": "ISC",
@@ -32,8 +33,11 @@
     "@types/glob": "^5.0.35",
     "@types/minimist": "^1.2.0",
     "@types/mkdirp": "^0.5.2",
+    "@types/mocha": "^5.2.0",
     "@types/node": "^9.6.6",
     "@types/rimraf": "^2.0.2",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "mocha": "^5.1.1",
+    "mocha-clean": "^1.0.0"
   }
 }

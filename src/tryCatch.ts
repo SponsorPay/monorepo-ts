@@ -14,7 +14,7 @@ export class Try<T> {
 
   async get(): Promise<T | null> {
     try {
-      return this.fn()
+      return await this.fn()
     } catch (e) {
       return null
     }
