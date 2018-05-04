@@ -16,6 +16,7 @@
     "declaration": true,
     "outDir": "build",
     "jsx": "react",
+    "strict": true,
     "importHelpers": true,
     "skipLibCheck": true,
     "sourceMap": true,

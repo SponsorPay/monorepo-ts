@@ -18,8 +18,10 @@ export async function topLevelDeps(packages: Package[]) {
     }
 
     const sameKey = Object.keys(deps).find(key => prev.hasOwnProperty(key))
-    if(deps[sameKey] !== prev[sameKey]) {
-      console.warn(current.json.name, `same key ${sameKey}, different version ${deps[sameKey]}`)
+    if (sameKey != null) {
+      if (deps[sameKey] !== prev[sameKey]) {
+        console.warn(current.json.name, `same key ${sameKey}, different version ${deps[sameKey]}`)
+      }
     }
 
     const toAdd = Object.keys(deps)

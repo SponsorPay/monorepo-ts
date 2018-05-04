@@ -14,7 +14,7 @@ export function tsConfigPaths(packages: Package[]) {
         baseUrl: ".",
         paths: Object.keys(p.json.dependencies)
           .filter(k => packageNameToPackage.has(k))
-          .map(k => packageNameToPackage.get(k))
+          .map(k => packageNameToPackage.get(k) as Package)
           .reduce((previousValue, currentValue) => ({...previousValue, [currentValue.json.name]: [`${currentValue.relativePath}/src`]}), {})
       }
     )

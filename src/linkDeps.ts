@@ -4,6 +4,7 @@ import * as mkdirp from "mkdirp"
 import {promisify} from "util"
 import {Package} from "./listPackages"
 import {exec} from "child_process"
+import {Try} from "./tryCatch"
 
 const prom = {
   rimraf: promisify(rimraf),
@@ -20,14 +21,14 @@ export async function linkDeps(packages: Package[], updatedOnly = false) {
     const nestedDeps = Array.prototype.concat.apply(
       [],
       Object.keys(p.json.dependencies)
-        .map(d => packageNameToPackage.get(d))
-        .filter(_ => _)
+        .map(d => packageNameToPackage.get(d) as Package)
+        .filter(_ => _ != null)
         .map(getAllNestedDeps)
         .map(set => Array.from(set.values()))
     )
     return new Set([
       ...Object.keys(p.json.dependencies)
-        .map(d => packageNameToPackage.get(d))
+        .map(d => packageNameToPackage.get(d) as Package)
         .filter(_ => _)
         .map(_ => _.json.name),
       ...nestedDeps
@@ -42,23 +43,27 @@ export async function linkDeps(packages: Package[], updatedOnly = false) {
       .filter(dep => !updatedOnly || nameToUpdated.has(dep))
       .forEach(async (dep: string) => {
         const depPackage = packageNameToPackage.get(dep)
-        const buildDir = `${depPackage.path}/build`
-        const nodeModulesDest = `${p.path}/node_modules/${dep}`
-        await prom.mkdirp(nodeModulesDest)
-        await prom.rimraf(nodeModulesDest)
-        await prom.symlink(buildDir, nodeModulesDest)
+        if (depPackage != null) {
+          const buildDir = `${depPackage.path}`
+          const nodeModulesDest = `${p.path}/node_modules/${dep}`
+          await prom.mkdirp(nodeModulesDest)
+          await prom.rimraf(nodeModulesDest)
+          await prom.symlink(buildDir, nodeModulesDest)
+        }
       })
   }
 
-  const {stdout} = await prom.exec(`${process.env.PWD}/node_modules/.bin/lerna updated --json`)
-
-  const updated: { name: string }[] = JSON.parse(stdout)
+  const updated = await Try.of(
+    async () => {
+      const {stdout} = await prom.exec(`${process.env.PWD}/node_modules/.bin/lerna updated --json`)
+      return JSON.parse(stdout) as { name: string }[]
+    }
+  )
+    .getOrElse(() => [])
 
   const nameToUpdated = new Map<string, Package>(
     updated.map(p => [p.name, p] as any)
   )
-
-  console.log("nameToUpdated", nameToUpdated.keys())
 
   const pathToPackage = new Map<string, Package>(
     packages.map(p => [p.path, p] as any)
