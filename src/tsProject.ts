@@ -19,6 +19,9 @@ const log = console.log.bind(console);
     case "link-updated":
       linkDeps(packages, true)
       break;
+    case "link-deps":
+      linkDeps(packages)
+      break;
     case "paths":
       tsConfigPaths(packages)
       break;
