@@ -13,10 +13,19 @@ const prom = {
   writeFile: promisify(fs.writeFile),
 }
 
-export async function assignFile<T>(p: Package, file: string, updates: T) {
+export interface AssignOptions {
+  newLine: string
+}
+
+export async function assignFile<T>(
+  p: Package,
+  file: string,
+  updates: T,
+  {newLine}: AssignOptions = {newLine: "\n"}
+) {
   const fullPath = `${p.path}/${file}`
   const json = JSON.parse(await prom.readFile(fullPath, {encoding: "utf8"}))
-  const merged = mergeWith(json, updates, (objValue, srcValue, key, object) => {
+  const merged = mergeWith(`${json}${newLine}`, updates, (objValue, srcValue, key, object) => {
     if(srcValue === undefined) {
       object[key] = undefined
     }
