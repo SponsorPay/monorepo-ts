@@ -25,12 +25,12 @@ export async function assignFile<T>(
 ) {
   const fullPath = `${p.path}/${file}`
   const json = JSON.parse(await prom.readFile(fullPath, {encoding: "utf8"}))
-  const merged = mergeWith(`${json}${newLine}`, updates, (objValue, srcValue, key, object) => {
+  const merged = mergeWith(json, updates, (objValue, srcValue, key, object) => {
     if(srcValue === undefined) {
       object[key] = undefined
     }
   })
-  await prom.writeFile(fullPath, JSON.stringify(merged, null, 2))
+  await prom.writeFile(fullPath, JSON.stringify(merged, null, 2) + newLine)
 }
 
 export async function assignPackageJson<T>(p: Package, updates: T) {
