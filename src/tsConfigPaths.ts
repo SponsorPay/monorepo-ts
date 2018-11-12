@@ -18,7 +18,7 @@ export function tsConfigPaths(packages: Package[]) {
           .map(k => packageNameToPackage.get(k) as Package)
           .reduce((previousValue, currentValue) => ({
             ...previousValue,
-            [currentValue.json.name]: [path.relative(p.path, `${currentValue.path}/src`)]
+            [currentValue.json.name]: [path.relative(p.path, `${currentValue.path}/src/*`)]
           }), {})
       }
     )
