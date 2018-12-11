@@ -2,7 +2,7 @@ import {writeFileSync} from "fs"
 import {Package} from "./listPackages"
 import * as path from "path"
 
-export function tsConfigPaths(packages: Package[], project = "tsconfig.json") {
+export function tsConfigReferences(packages: Package[], project = "tsconfig.json") {
   const packageNameToPackage = new Map<string, Package>(
     packages.map(p => [p.json.name, p] as any)
   )
@@ -11,15 +11,18 @@ export function tsConfigPaths(packages: Package[], project = "tsconfig.json") {
     const tsConfigPath = `${p.path}/${project}`
     const tsConfig = require(tsConfigPath)
     Object.assign(
-      tsConfig.compilerOptions, {
-        baseUrl: ".",
-        paths: Object.keys(p.json.dependencies)
+      tsConfig, {
+        references: Object.keys(p.json.dependencies)
           .filter(k => packageNameToPackage.has(k))
           .map(k => packageNameToPackage.get(k) as Package)
-          .reduce((previousValue, currentValue) => ({
-            ...previousValue,
-            [currentValue.json.name]: [path.relative(p.path, `${currentValue.path}/src/*`)]
-          }), {})
+          .reduce(
+            (references, pack) => ([
+              ...references, {
+                path: path.relative(p.path, `${pack.path}/${project}`)
+              }
+            ]),
+            [] as {path: string}[]
+          )
       }
     )
     writeFileSync(tsConfigPath, JSON.stringify(tsConfig, null, 2))

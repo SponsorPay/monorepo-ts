@@ -7,6 +7,7 @@ import {listPackages, Package} from "./listPackages"
 import {topLevelDeps} from "./topLevelDeps"
 import * as minimist from "minimist"
 import {tsConfigPaths} from "./tsConfigPaths"
+import {tsConfigReferences} from "./tsConfigReferences"
 
 const args = minimist(process.argv.slice(2))
 
@@ -23,7 +24,10 @@ const log = console.log.bind(console);
       linkDeps(packages)
       break;
     case "paths":
-      tsConfigPaths(packages)
+      tsConfigPaths(packages, args.project)
+      break;
+    case "refs":
+      tsConfigReferences(packages, args.project)
       break;
     case "print":
       console.log(
