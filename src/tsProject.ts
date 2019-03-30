@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 import {compiler} from "./compiler"
+import {copyDeps} from "./copyDeps"
 import {linkBin} from "./linkBin"
 import {linkDeps} from "./linkDeps"
 import {listPackages, Package} from "./listPackages"
@@ -22,6 +23,9 @@ const log = console.log.bind(console);
       break;
     case "link-deps":
       linkDeps(packages)
+      break;
+    case "copy-deps":
+      await copyDeps(packages)
       break;
     case "paths":
       tsConfigPaths(packages, args.project)
