@@ -14,7 +14,8 @@
     "link-source": "ts-node src/link-source",
     "compile": "tsc",
     "build": "rm -rf build && npm run compile",
-    "test": "mocha test/**/*.ts* --require=ts-node/register --require mocha-clean"
+    "test": "mocha test/**/*.ts* --require=ts-node/register --require mocha-clean",
+    "cd": "standard-version -m \"chore(release): %s [skip ci]\" && git push --follow-tags origin master && npm publish"
   },
   "author": "",
   "license": "ISC",
@@ -42,6 +43,7 @@
     "minimist": "^1.2.0",
     "mocha": "^5.1.1",
     "mocha-clean": "^1.0.0",
+    "standard-version": "^6.0.1",
     "ts-node": "^8.1.0"
   }
 }
