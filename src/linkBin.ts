@@ -11,7 +11,7 @@ const prom = {
 }
 
 export async function linkBin(packages: Package[]) {
-  const binDirPath = `${process.env.PWD}/node_modules/.bin`
+  const binDirPath = `${process.cwd()}/node_modules/.bin`
   const binaries = await prom.readdir(binDirPath)
 
   for (const p of packages) {

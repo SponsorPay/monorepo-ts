@@ -14,21 +14,21 @@
     "link-source": "ts-node src/link-source",
     "compile": "tsc",
     "build": "rm -rf build && npm run compile",
-    "test": "mocha test/**/*.ts* --require=ts-node/register --require mocha-clean"
+    "test": "mocha test/**/*.ts* --require=ts-node/register --require mocha-clean",
+    "cd": "standard-version -m \"chore(release): %s [skip ci]\" && git push --follow-tags origin master && npm publish"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chokidar": "^2.0.3",
     "glob": "^7.1.2",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "rimraf": "^2.6.2",
     "rxjs": "^5.5.10",
-    "ts-node": "^6.0.0",
-    "tslib": "^1.9.0",
-    "typescript": "^2.8.3"
+    "tslib": "^1.9.3",
+    "typescript": "^2.9.2"
   },
   "devDependencies": {
     "@types/chokidar": "^1.7.5",
@@ -42,6 +42,8 @@
     "@types/rimraf": "^2.0.2",
     "minimist": "^1.2.0",
     "mocha": "^5.1.1",
-    "mocha-clean": "^1.0.0"
+    "mocha-clean": "^1.0.0",
+    "standard-version": "^6.0.1",
+    "ts-node": "^8.1.0"
   }
 }
