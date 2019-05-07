@@ -56,7 +56,7 @@ export async function copyDeps(packages: Package[], updatedOnly = false) {
 
   const updated = await Try.of(
     async () => {
-      const {stdout} = await prom.exec(`${process.env.PWD}/node_modules/.bin/lerna updated --json`)
+      const {stdout} = await prom.exec(`${process.cwd()}/node_modules/.bin/lerna updated --json`)
       return JSON.parse(stdout) as { name: string }[]
     }
   )

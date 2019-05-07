@@ -1,7 +1,7 @@
 import * as glob from "glob"
 import {promisify} from "util"
 
-const lerna = require(process.env.PWD + "/lerna.json")
+const lerna = require(process.cwd() + "/lerna.json")
 
 export interface PackageJSON {
   name: string;
@@ -16,7 +16,7 @@ export interface Package {
 }
 
 export function getPackage(relativePath: string): Package {
-  const path = `${process.env.PWD}/${relativePath}`
+  const path = `${process.cwd()}/${relativePath}`
   const json = require(path + "/" + "package.json")
   return {
     relativePath,
