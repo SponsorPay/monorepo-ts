@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.4](https://github.com/kobiburnley/monorepo-ts/compare/v3.7.3...v3.7.4) (2020-01-07)
+
+
+
 ### [3.7.3](https://github.com/kobiburnley/monorepo-ts/compare/v3.7.2...v3.7.3) (2020-01-07)
 
 
